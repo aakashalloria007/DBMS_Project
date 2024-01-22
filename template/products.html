@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel>
+    <meta charset="UTF-8">
+    <title>Products</title>
+    <style>
+        table { width: 90%; display: inline-block ;}
+        tbody {width: 90%;}
+        th { text-align: left; padding-bottom: 10px; }
+        tr { display: none;}
+        td {width: 30%}
+        tr:first-child { display: table-row; }
+        #scroller { display:inline; width: 5%; appearance: slider-vertical; transform: rotate(180deg) }
+    </style>
+</head>
+<body>
+<table  id="target">
+  <thead>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in data %}
+      <tr>
+        {% for item in row %}
+          <td>{{ item }}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<input id="scroller" type="range" min="0" max="1" step=".1" value="0" />
+<script src="../staticFiles/tablereveal.js" type="module"></script>
+</body>
+</html>

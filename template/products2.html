@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel>
+    <meta charset="UTF-8">
+    <title>Products</title>
+    <style>
+        .scrollit {
+            overflow:scroll;
+            height:100px;
+        }
+    </style>
+</head>
+<body>
+<table>
+  <thead>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+    </tr>
+  </thead>
+</table>             
+<div class="scrollit">
+<table>
+  <tbody>
+    {% for row in data %}
+      <tr>
+        {% for item in row %}
+          <td>{{ item }}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco Track - Registration</title>
+    <link rel="stylesheet" href='/staticFiles/main.css' />
+
+</head>
+<body>
+<div class="bg-image"> </div>
+<div class="container">
+    <h2>Register to Eco Track</h2>
+    <form method="POST" action="/registration" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+        {% if form.account_type.errors %}
+                <ul class="errors">
+                    {% for error in form.account_type.errors %}
+                        <li style="color: red">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+        {% endif %}
+        {{ form.username(class="css_class") }}
+        {% if form.username.errors %}
+                <ul class="errors">
+                    {% for error in form.username.errors %}
+                        <li style="color: red">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+        {% endif %}
+        {{ form.email() }}
+        {% if form.email.errors %}
+                <ul class="errors">
+                    {% for error in form.email.errors %}
+                        <li style="color: red">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+        {% endif %}
+
+        <div class="pass">
+            {{ form.password() }}
+            <img class = "pass-icon" id = "pass-icon" onclick="pass()" src="/staticFiles/eye-close.png" >
+        </div>
+        {% if form.password.errors %}
+                <ul class="errors">
+                    {% for error in form.password.errors %}
+                        <li style="color: red">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+        {% endif %}
+        <div class="account_form_container">
+        <label class='type_label' >User Type:</label>
+        {% for subfield in form.account_type %}
+                <label class = "account_type_container">
+                    {{ subfield (class="user_input")}}
+                    <span class="checkmark">{{ subfield.label }}</span>
+                </label>
+        {% endfor %}
+        </div>
+        {{ form.profile_pic }}
+
+        {% if form.profile_pic.errors %}
+                <ul class="errors">
+                    {% for error in form.profile_pic.errors %}
+                        <li style="color: red">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+        {% endif %}
+        <button type="submit" >Register</button>
+
+        <a href="{{ url_for('login_page') }}"><button type="button" >Already Have an Account?</button></a>
+         {% with messages = get_flashed_messages() %}
+             {% if messages %}
+                   {% for message in messages %}
+                        <p style="color:red">{{ message }}</p>
+                   {% endfor %}
+             {% endif %}
+         {% endwith %}
+
+
+</form>
+</div>
+<script>
+    var a;
+    function pass(){
+        if (a==1){
+            document.getElementById('password').type='password';
+            document.getElementById('pass-icon').src = '/staticFiles/eye-close.png';
+            document.getElementById('pass-icon').style.top = "20px";
+            a=0
+        }
+        else{
+            document.getElementById('password').type='text';
+            document.getElementById('pass-icon').src = '/staticFiles/eye-open.png';
+            document.getElementById('pass-icon').style.top = "22px";
+            a=1
+        }
+    }
+</script>
+</body>
+
+</html>

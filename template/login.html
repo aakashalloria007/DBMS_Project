@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco Track - Login</title>
+    <link rel="stylesheet" href='/staticFiles/main.css' />
+
+</head>
+<body>
+<div class="bg-image"> </div>
+
+
+<div class="container">
+    <h2>Login to Eco Track</h2>
+    <form id="loginForm" action="/login" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <input type="text" id="email" placeholder="Email or Username" name="email" required>
+        <div class="pass">
+            <input type="password" id="password" placeholder="Password" name="password" required>
+            <img class = "pass-icon" id = "pass-icon" onclick="pass()" src="/staticFiles/eye-close.png" >
+        </div>    
+        <button type="submit" >Login</button>
+        <a href="{{ url_for('register_page') }}"><button type="button" >Don't Have an Account?</button></a>
+
+    </form>
+     {% with messages = get_flashed_messages() %}
+         {% if messages %}
+               {% for message in messages %}
+                    <p style="color:red">{{ message }}</p>
+               {% endfor %}
+         {% endif %}
+     {% endwith %}
+<script>
+    var a;
+    function pass(){
+        if (a==1){
+            document.getElementById('password').type='password';
+            document.getElementById('pass-icon').src = '/staticFiles/eye-close.png';
+            document.getElementById('pass-icon').style.top = "20px";
+            a=0
+        }
+        else{
+            document.getElementById('password').type='text';
+            document.getElementById('pass-icon').src = '/staticFiles/eye-open.png';
+            document.getElementById('pass-icon').style.top = "22px";
+            a=1
+        }
+    }
+</script>
+</div>
+</body>
+</html>

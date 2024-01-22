@@ -1,0 +1,222 @@
+
+
+
+body {
+    background-color: #2d2d2d;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+input[type=file]::file-selector-button {
+  margin-right: 20px;
+  border: none;
+  background: #4CAF50FF;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  transition: background .1s ease-in-out;
+
+}
+
+input[type=file]::file-selector-button:hover {
+  background: #4CAF50CC;
+}
+
+
+input[type=file]{
+    border-radius: 10px;
+    padding: 8px 10px 8px 10px;
+    height:auto;
+    align-content: center;
+    background-color: rgba(91, 91, 91, 0);
+}
+.bg-image{
+            z-index: 0;
+            background: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(/staticFiles/bgmov.gif);
+            width: 100%;
+            height: 100%;
+            filter: blur(3px)
+            brightness(-40%);
+            -webkit-filter: blur(3px);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: auto;
+            position: fixed;
+            justify-content: center;
+            align-items: center;
+        }
+.account_form{
+
+    padding-left: 100px;
+    width: 70px;
+    align-self: center;
+
+}
+
+ul{
+    padding: 0 0 0 15px ;
+    text-align: center;
+}
+li{
+    display: inline-block;
+    align-content: center;
+}
+
+.errors{
+    display: flex;
+    list-style: none;
+    font-size: 12px;
+    horiz-align: left;
+}
+
+
+.account_form_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+
+}
+
+label{
+    cursor: pointer;
+}
+.type_label{
+    text-overflow: clip;
+    display: inline;
+    width: 150px;
+    color: rgba(255, 255, 255, 0.9);
+    cursor: default;
+}
+
+.user_input {
+  position: absolute;
+  opacity: 0;
+  width: 10px;
+  height: 10px;
+  cursor: pointer;
+} /* this keeps the input accessible. Don't just display: none */
+
+.checkmark {
+
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 8px;
+    background-color: rgba(255, 255, 255, 0);
+    color: #ffffff;
+    border: 1.5px solid rgba(255, 255, 255, 0.72);
+    border-radius: 10px;
+    cursor: pointer;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 50px;
+    text-align: center;
+    align-self: center;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+
+}
+/* On mouse-over, add a grey background color */
+.account_type_container:hover input ~ .checkmark {
+    background-color: rgba(63, 145, 67, 0.8);
+    color: #FFFFFFFF;
+}
+/* When the radio button is checked, add a blue background */
+.account_type_container input:checked ~ .checkmark {
+  background-color: #4caf50;
+    color: #ffffff;
+}
+
+button:hover{
+    background-color: rgba(76, 175, 80, 0.8);
+    transition: background .1s ease-in-out;
+}
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+/* Show the indicator (dot/circle) when checked */
+.account_type_container input:checked ~ .checkmark:after {
+  display: none;
+}
+.account_type_container .checkmark:after {
+ 	top: 9px;
+	left: 9px;
+	width: 5px;
+	height: 8px;
+	border-radius: 0;
+	background: white;
+}
+
+
+.container {
+    z-index: 9999;
+    background-color: rgba(73, 73, 73, 0.64);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    color: #ffffff;
+    margin: 10px 0;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    /*background-color: #454545;*/
+    background-color: rgba(91, 91, 91, 0.64);
+}
+
+input::placeholder{
+    color: #ffffff;
+    opacity: 70%;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4caf50;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    transition: background .5s ease-in-out;
+}
+
+.pass{
+    display: inline-block;
+    position: relative;
+    width: 100%;
+
+}
+
+.password{
+    padding: 10px 5px;
+    outline: none;
+    border: 0;
+
+
+}
+.pass-icon{
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    width: 24px;
+    cursor: pointer;
+}
