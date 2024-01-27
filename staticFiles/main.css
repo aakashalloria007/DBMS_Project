@@ -1,5 +1,28 @@
+@font-face {
+    font-family: komodo;
+    src:url("/staticFiles/Komoda.otf")  format('opentype');
+}
+
+@font-face {
+    font-family: coves_light;
+    src:url("/staticFiles/Coves Light.otf")  format('opentype');
+}
+@font-face {
+    font-family: coves_bold;
+    src:url("/staticFiles/Coves Bold.otf")  format('opentype');
+}
 
 
+h2{
+    font-family:komodo, serif ;
+
+    font-size: 90px;
+    font-weight: normal;
+    letter-spacing: 3px;
+    margin: 20px 0 0 0;
+
+
+}
 
 body {
     background-color: #2d2d2d;
@@ -16,7 +39,7 @@ body {
 input[type=file]::file-selector-button {
   margin-right: 20px;
   border: none;
-  background: #4CAF50FF;
+  background: #21c592;
   padding: 10px 20px;
   border-radius: 10px;
   color: rgba(255, 255, 255, 0.9);
@@ -26,7 +49,7 @@ input[type=file]::file-selector-button {
 }
 
 input[type=file]::file-selector-button:hover {
-  background: #4CAF50CC;
+  background: #1EAE81;
 }
 
 
@@ -127,17 +150,17 @@ label{
 }
 /* On mouse-over, add a grey background color */
 .account_type_container:hover input ~ .checkmark {
-    background-color: rgba(63, 145, 67, 0.8);
+    background-color: rgba(30, 174, 129, 0.8);
     color: #FFFFFFFF;
 }
 /* When the radio button is checked, add a blue background */
 .account_type_container input:checked ~ .checkmark {
-  background-color: #4caf50;
+  background-color: #21c592;
     color: #ffffff;
 }
 
 button:hover{
-    background-color: rgba(76, 175, 80, 0.8);
+    background-color: rgba(30, 174, 129, 0.8);
     transition: background .1s ease-in-out;
 }
 .checkmark:after {
@@ -182,14 +205,20 @@ input {
 }
 
 input::placeholder{
+    font-family: coves_light,sans-serif;
+    font-size: 18px;
     color: #ffffff;
     opacity: 70%;
+    font-weight: bold;
+    letter-spacing: 3px;
+    text-align: left ;
+
 }
 
 button {
     width: 100%;
     padding: 10px;
-    background-color: #4caf50;
+    background-color: #21c592;
     color: #ffffff;
     border: none;
     border-radius: 4px;

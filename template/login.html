@@ -13,7 +13,7 @@
 
 
 <div class="container">
-    <h2>Login to Eco Track</h2>
+    <h2>LOGIN</h2>
     <form id="loginForm" action="/login" method="POST">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         <input type="text" id="email" placeholder="Email or Username" name="email" required>
@@ -44,7 +44,7 @@
         else{
             document.getElementById('password').type='text';
             document.getElementById('pass-icon').src = '/staticFiles/eye-open.png';
-            document.getElementById('pass-icon').style.top = "22px";
+            document.getElementById('pass-icon').style.top = "20px";
             a=1
         }
     }

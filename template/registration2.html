@@ -10,7 +10,7 @@
 <body>
 <div class="bg-image"> </div>
 <div class="container">
-    <h2>Register to Eco Track</h2>
+    <h2>REGISTER</h2>
     <form method="POST" action="/registration" enctype="multipart/form-data">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 
@@ -93,7 +93,7 @@
         else{
             document.getElementById('password').type='text';
             document.getElementById('pass-icon').src = '/staticFiles/eye-open.png';
-            document.getElementById('pass-icon').style.top = "22px";
+            document.getElementById('pass-icon').style.top = "20px";
             a=1
         }
     }

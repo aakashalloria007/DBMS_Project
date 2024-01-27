@@ -64,7 +64,7 @@ csrf = CSRFProtect(app)
 @app.route("/", )
 def hello():
     error = None
-    return render_template("main.html", error=error)
+    return render_template("main_page.html", error=error)
 
 
 @app.route("/registration", methods=["POST"])
