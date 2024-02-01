@@ -1,22 +1,23 @@
+import hashlib
 import logging
 import os
 import re
+from logging import WARNING
+
 import flask
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask import Flask
 from flask import render_template, redirect, url_for, flash
 from flask import request
-from logging import WARNING
-from flask import Flask
-from flask_mysqldb import MySQL
 from flask_login import LoginManager
-from wtforms import validators
+from flask_mysqldb import MySQL
 from flask_wtf import Form
-from wtforms.fields.simple import StringField, PasswordField, EmailField
-from wtforms.fields import RadioField
-from flask_wtf.file import FileField, FileRequired, FileAllowed, MultipleFileField
-from werkzeug.utils import secure_filename
-import hashlib
 from flask_wtf.csrf import CSRFProtect
+from flask_wtf.file import FileField, FileAllowed
+from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
+from wtforms import validators
+from wtforms.fields import RadioField
+from wtforms.fields.simple import StringField, PasswordField, EmailField
 
 login_manager = LoginManager()
 mysql = MySQL()
@@ -30,14 +31,13 @@ app.secret_key = "0fc8fecf330c2fcc7869c1169638d5a7626e827d9d22bede66e51ebdc57a9e
 app.config['SECRET_KEY'] = "0fc8fecf330c2fcc7869c1169638d5a7626e827d9d22bede66e51ebdc57a9e74"
 mysql.init_app(app)
 
-
-
 app.app_context().push()
 
 
 def allowed_file(filename):
     return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 def EmailRegexValidation(form, field):
     email_regex = r"^\S+@\S+\.\S+$"
@@ -50,21 +50,33 @@ def EmailRegexValidation(form, field):
 
 ALLOWED_EXTENSIONS = ["jpg", "jpeg", "png"]
 
+
 class RegisterForm(Form):
     username = StringField('Username', [validators.Length(min=4, max=25), ], render_kw={"placeholder": "Username"})
     email = EmailField('Email Address', [validators.Length(min=6, max=35)], render_kw={"placeholder": "Email"})
-    password = PasswordField('Password', [validators.Length(min=6, max=35)], render_kw={"placeholder": "Password","id":"password"})
+    password = PasswordField('Password', [validators.Length(min=6, max=35)],
+                             render_kw={"placeholder": "Password", "id": "password"})
     account_type = RadioField('Account Type', [validators.input_required()],
                               choices=[('user', "User"), ('seller', "Seller")], render_kw={"class": "account_form"})
-    profile_pic = FileField("Profile Pic",[FileAllowed(['jpg', 'png'])])
+    profile_pic = FileField("Profile Pic", [FileAllowed(['jpg', 'png'])])
 
 
 csrf = CSRFProtect(app)
 
+
 @app.route("/", )
 def hello():
-    error = None
-    return render_template("main_page.html", error=error)
+    if request.cookies.get('session_id') is not None:
+        session_id = request.cookies.get('session_id')
+        cursor = mysql.connection.cursor()
+        cursor.execute(
+            f"SELECT name,description,price from product")
+        data = cursor.fetchall()
+
+        error = None
+        return render_template("main_page.html", error=error,data=data)
+    else :
+        return render_template("main_page.html")
 
 
 @app.route("/registration", methods=["POST"])

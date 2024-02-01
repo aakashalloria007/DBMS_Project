@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;500&display=swap');
+
+@font-face {
+    font-family: Noi;
+    src:url("/staticFiles/NoiGroteskTrial-Regular.otf")  format('opentype');
+}
+
+.main_heading{
+    font-family: Noi,sans-serif;
+    font-size: 56px;
+}
+.Heading {
+    position: relative;
+    margin-top: 6%;
+    font-size: 200%;
+    display: inline-block;
+    text-align: center;
+}
+
+body
+{
+
+    background-color:#ecf9ff;
+    margin: 0 0 8px;
+}
+
+
+table {
+    border: 0px;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0px; /* Optional: Add some margin for better appearance */
+}
+
+
+#About\ Us{
+    float: left;
+    margin-left: 800px;
+}
+
+.logo_img{
+    height: 40px;
+    margin: 0;
+    margin-top:-8px;
+    float: left;
+    vertical-align: middle;
+    padding: 0  ;
+}
+.navbar {
+    z-index: 20;
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0;
+    padding-top: 15px;
+    padding-right: 20px;
+    margin: 0 0 0 0 ;
+    background-color: #1EAE81;
+    height: 50px;
+    display: block;
+    width: 100%;
+    text-align: center;
+    align-content: center;
+    vertical-align: middle;
+}
+
+/* .navigation {
+
+
+} */
+
+.navigation ul {
+    display: flex;
+    justify-content: space-between;
+    vertical-align: middle;
+    list-style: none;
+    overflow: clip;
+    height: 40px;
+    margin: 0 0 0 0 ;
+    padding: 0;
+    padding-top: 5px;
+
+}
+
+.background_video{
+    position: relative;
+    overflow: hidden;
+}
+.background_video video{
+    position:relative;
+    z-index: -1;
+}
+.overlay{
+    color: #106148;
+    top: 20%;
+    left: 32%;
+    position:absolute;
+    z-index: 0;
+}
+#myVideo {
+    z-index: -1;
+    object-fit: cover;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    width: 101%;
+    height: 800px;
+
+    display: block;
+    border-style: none none solid none;
+    border-width: 1px;
+    border-color: #000000
+}
+
+.navigation ul li {
+    box-sizing: border-box;
+    /* display: inline-block; */
+    /* margin-top: 30px; */
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.navigation ul li a {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.product-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 50px 0 0;
+}
+
+.product {
+    background: rgba(223, 232, 222, 0.48);
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr; /* Adjust the column widths as needed */
+    gap: 10px;
+    border: 1px solid #ccc;
+    padding: 20px 15px;
+    width:90%;
+    height: auto;
+    border-radius: 30px;
+    margin: 10px 0px 10px 0px;
+}
+
+img {
+    margin-left: 20px;
+    margin-top: 8px;
+    width: 170px;
+    height: 170px;
+    grid-row: span 3;
+    border-radius:20px;
+    crop: auto;
+}
+
+.contents{
+    font-family: Poppins,sans-serif;
+    letter-spacing: 0.5px;
+    line-height: 30px;
+    margin: 0;
+}
+.stock{
+    font-family: Poppins,sans-serif;
+    grid-row:  span 2;
+    grid-column:  3;
+}
+
+.stock button {
+    font-family: Poppins,sans-serif;
+    margin-top: 10px;
+    width: 12em;
+    height: 80px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+.stock button:hover{
+    background: rgba(77, 215, 63, 0.18);
+}
+
+
+body::-webkit-scrollbar {
+    border-radius: 6px;
+    width: 8px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #1eae81; /* Green color for the scrollbar thumb */
+    border-radius: 6px; /* Rounded corners for the thumb */
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background-color: #157b5b; /* Green color for the scrollbar thumb */
+
+}
+body::-webkit-scrollbar-track {
+    background: #fff; /* Background color for the scrollbar track */
+    border-radius: 6px; /* Rounded corners for the track */
+}

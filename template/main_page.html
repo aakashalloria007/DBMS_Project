@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/staticFiles/main_page.css">
+</head>
+<body>
+
+
+
+    <div class="navbar">
+        <nav class="navigation">
+            <ul>
+                <li><img class="logo_img" src="/staticFiles/Eco%20Track%20Long%20Logo.png" alt="ECO TRACK"  /></li>
+                <li><a id="About Us" href="about.asp">About Us</a></li>
+                
+                <li><a href="{{ url_for('registration') }}">User Profile</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="background_video">
+        <video  autoplay="" loop="" playsinline="" webkit-playsinline="" muted="" id="myVideo" __idm_id__="2678785">
+            <source src="/staticFiles/hp-vid-final_zx3bay.mp4" type="video/mp4">
+        </video>
+        <div class="overlay">
+            <h1 class="main_heading">Go Green, Live Clean.</h1>
+        </div>
+
+    </div>
+
+    <div class="product-container">
+    {% for row in data %}
+    <div class="product">
+        <img src="/staticFiles/Profile_Pics/aakashalloriaq1112Eco_Track_Logo.png" alt="Product Image">
+        <div class="contents">
+            <h2>{{ row[0] }}</h2>
+            <p>{{ row[1] }}</p>
+            <p><strong>Seller Name:</strong> ABC Seller</p>
+        </div>
+        <div class="stock">
+            <p ><strong>Stock Quantity:</strong> 10</p>
+            <button onclick="buyProduct()">Buy Now {{ row[2] }}</button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+</body>
+
+</html>
+

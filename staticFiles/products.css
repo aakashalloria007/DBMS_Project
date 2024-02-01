@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;500&display=swap');
+
+.product-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.product {
+    background: rgba(223, 232, 222, 0.48);
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr; /* Adjust the column widths as needed */
+    gap: 10px;
+    border: 1px solid #ccc;
+    padding: 20px 15px;
+    width:90%;
+    height: auto;
+    border-radius: 30px;
+    margin: 10px 0px 10px 0px;
+}
+
+img {
+    margin-left: 20px;
+    margin-top: 8px;
+    width: 170px;
+    height: 170px;
+    grid-row: span 3;
+    border-radius:20px;
+    crop: auto;
+}
+
+.contents{
+    font-family: Poppins,sans-serif;
+    letter-spacing: 0.5px;
+    line-height: 30px;
+    margin: 0;
+}
+.stock{
+    font-family: Poppins,sans-serif;
+    grid-row:  span 2;
+    grid-column:  3;
+}
+
+.stock button {
+    font-family: Poppins,sans-serif;
+    margin-top: 10px;
+    width: 12em;
+    height: 80px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+.stock button:hover{
+    background: rgba(77, 215, 63, 0.18);
+}
