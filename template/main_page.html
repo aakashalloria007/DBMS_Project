@@ -8,49 +8,92 @@
     <title>Document</title>
     <link rel="stylesheet" href="/staticFiles/main_page.css">
 </head>
+
 <body>
-
-
-
-    <div class="navbar">
+    <div id="navbar" class="navbar">
         <nav class="navigation">
             <ul>
-                <li><img class="logo_img" src="/staticFiles/Eco%20Track%20Long%20Logo.png" alt="ECO TRACK"  /></li>
-                <li><a id="About Us" href="about.asp">About Us</a></li>
+                <li><img class="logo_img" src="/staticFiles/EcoTrack.png" alt="ECO TRACK"  /></li>
+                <li id="nav_url"><a id="About Us" href="about.asp">About Us</a></li>
                 
-                <li><a href="{{ url_for('registration') }}">User Profile</a></li>
+                <li id="nav_url"><a href="{{ url_for('registration') }}">User Profile</a></li>
             </ul>
         </nav>
     </div>
-
-    <div class="background_video">
+    <div id = "background_video" class="background_video">
         <video  autoplay="" loop="" playsinline="" webkit-playsinline="" muted="" id="myVideo" __idm_id__="2678785">
             <source src="/staticFiles/hp-vid-final_zx3bay.mp4" type="video/mp4">
         </video>
         <div class="overlay">
             <h1 class="main_heading">Go Green, Live Clean.</h1>
         </div>
-
     </div>
-
-    <div class="product-container">
+    <div id="product-container" class="product-container">
     {% for row in data %}
-    <div class="product">
-        <img src="/staticFiles/Profile_Pics/aakashalloriaq1112Eco_Track_Logo.png" alt="Product Image">
-        <div class="contents">
-            <h2>{{ row[0] }}</h2>
-            <p>{{ row[1] }}</p>
-            <p><strong>Seller Name:</strong> ABC Seller</p>
+        <div class="product">
+            <img id="prod_img" src="/staticFiles/Profile_Pics/aakashalloriaq1112Eco_Track_Logo.png" alt="Product Image">
+            <div class="contents">
+                <h2>{{ row[0] }}</h2>
+                <p>{{ row[1] }}</p>
+                <p><strong>Seller Name:</strong> ABC Seller</p>
+            </div>
+            <div class="stock">
+                <p ><strong>Stock Quantity:</strong> 10</p>
+                <button onclick="buyProduct()">Buy Now {{ row[2] }}</button>
+            </div>
         </div>
-        <div class="stock">
-            <p ><strong>Stock Quantity:</strong> 10</p>
-            <button onclick="buyProduct()">Buy Now {{ row[2] }}</button>
-        </div>
-    </div>
     {% endfor %}
-</div>
-
+    </div>
 </body>
+<script>
+    navbar = document.getElementById("navbar");
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const intersecting = entry.isIntersecting;
+        if (intersecting){
 
+            navbar.classList.remove("fade_in");
+            navbar.classList.add("fade_out");
+
+        }
+
+      })
+    },{ threshold: 0.9 });
+    observer.observe(document.getElementsByClassName("product")[2])
+
+
+    const observer2 = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const intersecting = entry.isIntersecting;
+        if (intersecting){
+            console.log("video on")
+            navbar.classList.remove("fade_out");
+            navbar.classList.add("fade_in");
+
+        }
+
+      })
+    },{ threshold: 0.9 });
+
+
+    observer2.observe(document.getElementById("background_video"))
+
+
+    const observer3 = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            const intersecting = entry.isIntersecting;
+            if (intersecting){
+                console.log("Product on screen")
+               entry.target.classList.add("fade-in-section")
+            }
+          })
+        },{ threshold: 0 });
+    document.querySelectorAll(".product").forEach((i) =>{
+        if (i){
+            observer3.observe(i);
+        }
+
+    })
+</script>
 </html>
 

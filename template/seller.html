@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Seller Page</title>
+    <link rel="stylesheet" href="C:\Users\aakash\Desktop\BCA\4th SEM\DBMS PROJECT\staticFiles\seller.css">
+</head>
+<body>
+<div class="product_entry_container">
+    <form>
+        <div id="product_id" class="grid-item">
+            <label for="product_id">Product ID:</label>
+            <input type="text" placeholder="Product ID">
+        </div>
+        <div id="product_name" class="grid-item">
+            <label for="product_name">Product Name:</label>
+            <input type="text" placeholder="Product Name">
+        </div>
+        <div id="product_image" class="grid-item">
+            <label for="product_image">Product Image:</label>
+            <input type="file" placeholder="Product Image">
+        </div>
+        <div id="categories" class="grid-item">
+            <label for="categories">Choose a Category:</label>
+            <select name="Category">
+                <option value="Category 1">Category 1</option>
+                <option value="Category 2">Category 2</option>
+                <option value="Category 3">Category 3</option>
+                <option value="Category 4">Category 4</option>
+            </select>
+        </div>
+        <div id="price" class="grid-item">
+            <label for="price">Price:</label>
+            <input type="number" placeholder="Price">
+        </div>
+        <div id="stock" class="grid-item">
+            <label for="stock">Stock:</label>
+            <input type="number" placeholder="Stock">
+        </div>
+        <div id="description" class="grid-item">
+            <label for="description">Description:</label>
+            <input type="text" placeholder="Description">
+        </div>
+        <div id="warranty" class="grid-item">
+            <label for="warranty">Warranty:</label>
+            <input type="date" placeholder="Warranty">
+        </div>
+        <div id="expiry" class="grid-item">
+            <label for="expiry">Expiry:</label>
+            <input type="date" placeholder="Expiry">
+        </div>
+        <div id="weight" class="grid-item">
+            <label for="weight">Weight:</label>
+            <input type="number" placeholder="Weight">
+        </div>
+        <div id="dimensions" class="grid-item">
+            <label for="dimensions">Dimensions:</label>
+            <div>
+                <input type="number" placeholder="Height">
+                <input type="number" placeholder="Width">
+                <input type="number" placeholder="Breadth">
+            </div>
+        </div>
+        <div id="country" class="grid-item">
+            <label for="country">Country:</label>
+            <input type="text" placeholder="Country">
+        </div>
+        <div id="submit_button" class="grid-item">
+            <input type="submit" value="Add Product">
+        </div>
+    </form>
+</div>
+</body>
+</html>

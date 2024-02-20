@@ -1,0 +1,76 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+
+.product_entry_container {
+    width: 90%; /* Set width to 100% */
+    margin: 20px 0; /* Adjust margin as needed */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 20px; /* Curved borders */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+}
+
+.grid-item {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"],
+input[type="number"],
+select,
+input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#dimensions > div {
+    display: flex;
+}
+
+#dimensions input[type="number"] {
+    width: calc(33.33% - 10px); /* Adjust width as needed */
+    margin-right: 10px;
+}
+
+#dimensions input[type="number"]:last-child {
+    margin-right: 0;
+}

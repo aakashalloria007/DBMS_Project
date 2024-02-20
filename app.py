@@ -26,12 +26,14 @@ app = Flask(__name__, template_folder='template', static_folder='staticFiles')
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'aak20f031'
-app.config['MYSQL_DB'] = 'dbmsproject'
+app.config['MYSQL_DB'] = 'dbms_project'
 app.secret_key = "0fc8fecf330c2fcc7869c1169638d5a7626e827d9d22bede66e51ebdc57a9e74"
 app.config['SECRET_KEY'] = "0fc8fecf330c2fcc7869c1169638d5a7626e827d9d22bede66e51ebdc57a9e74"
 mysql.init_app(app)
 
 app.app_context().push()
+
+ALLOWED_EXTENSIONS = ["jpg", "jpeg", "png"]
 
 
 def allowed_file(filename):
@@ -48,15 +50,12 @@ def EmailRegexValidation(form, field):
         return
 
 
-ALLOWED_EXTENSIONS = ["jpg", "jpeg", "png"]
-
-
 class RegisterForm(Form):
     username = StringField('Username', [validators.Length(min=4, max=25), ], render_kw={"placeholder": "Username"})
     email = EmailField('Email Address', [validators.Length(min=6, max=35)], render_kw={"placeholder": "Email"})
     password = PasswordField('Password', [validators.Length(min=6, max=35)],
                              render_kw={"placeholder": "Password", "id": "password"})
-    account_type = RadioField('Account Type', [validators.input_required()],
+    accounttype = RadioField('Account Type', [validators.input_required()],
                               choices=[('user', "User"), ('seller', "Seller")], render_kw={"class": "account_form"})
     profile_pic = FileField("Profile Pic", [FileAllowed(['jpg', 'png'])])
 
@@ -70,12 +69,12 @@ def hello():
         session_id = request.cookies.get('session_id')
         cursor = mysql.connection.cursor()
         cursor.execute(
-            f"SELECT name,description,price from product")
+            f"SELECT ProductName,Description,Price from products")
         data = cursor.fetchall()
 
         error = None
-        return render_template("main_page.html", error=error,data=data)
-    else :
+        return render_template("main_page.html", error=error, data=data)
+    else:
         return render_template("main_page.html")
 
 
@@ -102,23 +101,23 @@ def register_page():
         else:
             flash("Invalid File Type")
             return redirect(url_for('register_page'))
-        if form.account_type.data == "user":
-            account_type = "User"
+        if form.accounttype.data == "user":
+            AccountType = "User"
         else:
-            account_type = "Seller"
+            AccountType = "Seller"
 
         user_pw_hash = generate_password_hash(password, salt_length=1000)
         cursor.execute(
-            f"SELECT username from userdata where email = '{email}' or username = '{username}' limit 1")
+            f"SELECT username from users where email = '{email}' or username = '{username}' limit 1")
         data = cursor.fetchall()
         if data:
             flash('Username or Email Already Exists Please Login to your account')
             return redirect(url_for('login_page'))
         print(filename)
-        leng = f"""INSERT INTO userdata(username,email,password,account_type,pfp_url) values("{username}","{email}","{user_pw_hash}","{account_type}","{filename}")"""
+        leng = f"""INSERT INTO users(username,email,password,AccountType,ProfileUrl) values("{username}","{email}","{user_pw_hash}","{AccountType}","{filename}")"""
         logging.log(msg=leng, level=WARNING)
         cursor.execute(
-            f"""INSERT INTO userdata(username,email,password,account_type,pfp_url) values("{username}","{email}","{user_pw_hash}","{account_type}","{filename}")""")
+            f"""INSERT INTO users(username,email,password,AccountType,ProfileUrl) values("{username}","{email}","{user_pw_hash}","{AccountType}","{filename}")""")
         mysql.connection.commit()
         return redirect(url_for('login_page'))
     else:
@@ -140,7 +139,7 @@ def login_page():
         email_user = request.form['email']
         password = request.form['password']
         cursor.execute(
-            f"SELECT username,email,password,cookie from userdata where email = '{email_user}' or username = '{email_user}' limit 1")
+            f"SELECT username,email,password,cookie from users where email = '{email_user}' or username = '{email_user}' limit 1")
         data = cursor.fetchall()
         if data:
             data = data[0]
@@ -155,7 +154,7 @@ def login_page():
                 hashed_user_cookie = hashlib.sha256(user_cookie.encode()).hexdigest()
                 if cookie_data is None:
                     cursor.execute(
-                        f"UPDATE userdata SET cookie = '{hashed_user_cookie}' where email = '{email_user}' or username = '{email_user}' limit 1")
+                        f"UPDATE users SET cookie = '{hashed_user_cookie}' where email = '{email_user}' or username = '{email_user}' limit 1")
                     mysql.connection.commit()
                     cookie_data = hashed_user_cookie
                 res.set_cookie('session_id', cookie_data, )
@@ -172,7 +171,7 @@ def profile_page():
         session_id = request.cookies.get('session_id')
         cursor = mysql.connection.cursor()
         cursor.execute(
-            f"SELECT username,email,pfp_url from userdata where cookie = '{session_id}' limit 1")
+            f"SELECT username,email,ProfileUrl from users where cookie = '{session_id}' limit 1")
         data = cursor.fetchall()[0]
         mydict = {
             'username': data[0],

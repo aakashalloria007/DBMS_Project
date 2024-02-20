@@ -9,7 +9,11 @@
 
 </head>
 <body>
-<div class="bg-image"> </div>
+<div class="bg-image">
+    <video autoplay muted loop >
+        <source src="/staticFiles/bgmov.mp4"  type="video/mp4">
+    </video>
+</div>
 
 
 <div class="container">
@@ -23,7 +27,6 @@
         </div>    
         <button type="submit" >Login</button>
         <a href="{{ url_for('register_page') }}"><button type="button" >Don't Have an Account?</button></a>
-
     </form>
      {% with messages = get_flashed_messages() %}
          {% if messages %}

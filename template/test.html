@@ -1,11 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Cards</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;500&display=swap');
+
+    * {
+        font-family: Poppins, sans-serif;
+    }
+
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: 0 auto;
+        width: 90%;
+    }
+
+    .product-card {
+        background: rgba(223, 232, 222, 0.48);
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin: 10px;
+        padding: 10px;
+        width: 30%; /* Adjust as needed */
+        padding-bottom: 15px;
+    }
+
+    .product-image {
+        margin-top: 15px;
+        text-align: center;
+    }
+
+    .product-image img {
+        width: 170px;
+        height: 170px;
+        border-radius: 10px;
+    }
+
+    .product-info {
+        margin-top: 10px;
+    }
+
+    button {
+        background-color: #007bff;
+        border: none;
+        border-radius: 4px;
+        color: #fff;
+        cursor: pointer;
+        display: block;
+        font-size: 16px;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        width: 100%;
+    }
+
+    button:hover {
+        background-color: #0069d9;
+    }
+
+    button[data-price] {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    button[data-price] span:first-child {
+        font-weight: bold;
+    }
+
+    .seller {
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    /* Fullscreen product details */
+    .fullscreen-product {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-width: 100%;
+        min-height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+    }
+
+    .product-details {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 85%;
+        transform: translate(-50%, -50%);
+        background: rgb(223, 232, 222);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        transition: opacity 0.2s ease; /* Adjust duration and easing as needed */
+    }
+    .product-details img{
+        position: absolute;
+        left: 60%;
+        height: 300px;
+        width: 300px;
+        border-radius: 10px;
+
+    }
+    .product-details.open {
+        opacity: 1;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <p id="demo">abcdef<</p>
-    <button onclick="document.getElementById('demo').innerHTML='Hello'">Type Here</button>
+  <div class="container">
+    <div class="product-card">
+      <div class="product-image">
+        <img src="C:\Users\aakash\Desktop\BCA\4th SEM\DBMS PROJECT\staticFiles\Profile_Pics\aakashalloriaq1112Eco_Track_Logo.png" alt="Product 1">
+        <h4>iPhone 13 Pro Max</h4>
+      </div>
+      <div class="product-info">
+        <p>Latest iPhone model with advanced features</p>
+        <span class="seller">ABC Seller</span>
+      </div>
+      <button class="buy-btn" data-price="1099.99">Buy Now - $1099.99</button>
+    </div>
+    <div class="product-card">
+      <div class="product-image">
+        <img src="image2.jpg" alt="Product 2">
+      </div>
+      <div class="product-info">
+        <h4>Product 2</h4>
+        <p>Product description here...</p>
+        <span class="seller">Sold by: Jane Smith</span>
+      </div>
+      <button class="buy-btn" data-price="299.99">Buy Now - $299.99</button>
+    </div>
+    <div class="product-card">
+      <div class="product-image">
+        <img src="image3.jpg" alt="Product 3">
+      </div>
+      <div class="product-info">
+        <h4>Product 3</h4>
+        <p>Product description here...</p>
+        <span class="seller">Sold by: Michael Lee</span>
+      </div>
+      <button class="buy-btn" data-price="399.99">Buy Now - $399.99</button>
+    </div>
+  </div>
+
+  <!-- Fullscreen Product Details -->
+    <div class="fullscreen-product">
+      <div class="product-details">
+        <span class="close-btn" onclick="closeFullscreenProduct()">&times;</span>
+        <h2>Product Details</h2>
+        <div id="product-details-content"></div>
+      </div>
+    </div>
+
+ <script>
+  const buyButtons = document.querySelectorAll('.buy-btn');
+
+  buyButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const price = button.getAttribute('data-price');
+      // Here you can get other product details and populate them in the fullscreen view
+
+      // Example of dynamically populating other product details
+      const productDetails = {
+        product_url: "C:\\Users\\aakash\\Desktop\\BCA\\4th SEM\\DBMS PROJECT\\staticFiles\\Profile_Pics\\aakashalloriaq1112Eco_Track_Logo.png",
+        productId: 12345,
+        sellerId: 'XYZ123',
+        productName: 'iPhone 13 Pro Max',
+        description: 'Latest iPhone model with advanced features',
+        category: 'Electronics',
+        brand: 'Apple',
+        stockQuantity: 50,
+        productUrl: 'https://example.com/product1',
+        warranty: '1 year',
+        expiry: 'N/A',
+        weight: '200g',
+        dimensions: '10x5x2 inches',
+        countryOfOrigin: 'USA',
+        ecoTrackChoice: 'Yes'
+      };
+
+      // Construct HTML for product details
+      const productDetailsContent = `
+        <img src="${productDetails.product_url}">
+        <p><strong>Product ID:</strong> ${productDetails.productId}</p>
+        <p><strong>Seller ID:</strong> ${productDetails.sellerId}</p>
+        <p><strong>Product Name:</strong> ${productDetails.productName}</p>
+        <p><strong>Description:</strong> ${productDetails.description}</p>
+        <p><strong>Category:</strong> ${productDetails.category}</p>
+        <p><strong>Brand:</strong> ${productDetails.brand}</p>
+        <p><strong>Price:</strong> $${price}</p>
+        <p><strong>Stock Quantity:</strong> ${productDetails.stockQuantity}</p>
+        <p><strong>Product URL:</strong> <a href="${productDetails.productUrl}" target="_blank">${productDetails.productUrl}</a></p>
+        <p><strong>Warranty:</strong> ${productDetails.warranty}</p>
+        <p><strong>Expiry:</strong> ${productDetails.expiry}</p>
+        <p><strong>Weight:</strong> ${productDetails.weight}</p>
+        <p><strong>Dimensions:</strong> ${productDetails.dimensions}</p>
+        <p><strong>Country of Origin:</strong> ${productDetails.countryOfOrigin}</p>
+        <p><strong>EcoTrack Choice:</strong> ${productDetails.ecoTrackChoice}</p>
+      `;
+
+      document.getElementById('product-details-content').innerHTML = productDetailsContent;
+      openFullscreenProduct();
+    });
+  });
+
+  function openFullscreenProduct() {
+    const fullscreenProduct = document.querySelector('.fullscreen-product');
+    const productDetails = document.querySelector('.product-details');
+    fullscreenProduct.style.display = 'block';
+    setTimeout(() => {
+        productDetails.classList.add('open');
+    }, 20); // Delay to ensure transition starts after display set to block
+  }
+
+  function closeFullscreenProduct() {
+    const fullscreenProduct = document.querySelector('.fullscreen-product');
+    const productDetails = document.querySelector('.product-details');
+    productDetails.classList.remove('open');
+    setTimeout(() => {
+        fullscreenProduct.style.display = 'none';
+    }, 250); // Delay to ensure transition completes before hiding
+  }
+</script>
 </body>
 </html>
