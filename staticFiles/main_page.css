@@ -233,12 +233,12 @@ body::-webkit-scrollbar-track {
 
 
 .fade_in{
-    animation: fadeIn ease-in 200ms;
-    opacity: 1;
+    animation: fadeIn linear 300ms;
+    opacity: 1;~
 }
 
 .fade_out{
-    animation: fadeOut ease-in 200ms;
+    animation: fadeOut linear 300ms;
     opacity: 0;
 }
 @keyframes fadeIn {

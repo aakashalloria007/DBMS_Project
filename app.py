@@ -19,7 +19,6 @@ from wtforms import validators
 from wtforms.fields import RadioField
 from wtforms.fields.simple import StringField, PasswordField, EmailField
 
-login_manager = LoginManager()
 mysql = MySQL()
 
 app = Flask(__name__, template_folder='template', static_folder='staticFiles')
@@ -36,11 +35,14 @@ app.app_context().push()
 ALLOWED_EXTENSIONS = ["jpg", "jpeg", "png"]
 
 
+#Validation For Filename To Make Sure its an image
 def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
+
+#Validation for Email Formatting
 def EmailRegexValidation(form, field):
     email_regex = r"^\S+@\S+\.\S+$"
     if re.match(email_regex, form.email.data) is None:
@@ -50,6 +52,7 @@ def EmailRegexValidation(form, field):
         return
 
 
+#Class Based Registration Form Using WTForm
 class RegisterForm(Form):
     username = StringField('Username', [validators.Length(min=4, max=25), ], render_kw={"placeholder": "Username"})
     email = EmailField('Email Address', [validators.Length(min=6, max=35)], render_kw={"placeholder": "Email"})
@@ -65,15 +68,30 @@ csrf = CSRFProtect(app)
 
 @app.route("/", )
 def hello():
+
     if request.cookies.get('session_id') is not None:
         session_id = request.cookies.get('session_id')
         cursor = mysql.connection.cursor()
-        cursor.execute(
-            f"SELECT ProductName,Description,Price from products")
-        data = cursor.fetchall()
+        cursor.execute(f"SELECT AccountType from users where Cookie = '{session_id}'")
+        row = cursor.fetchone()
+        usertype = row[0]
 
-        error = None
-        return render_template("main_page.html", error=error, data=data)
+
+        if usertype =="User":
+            cursor.execute(
+                f"SELECT * from products")
+            data = cursor.fetchall()
+            error = None
+            return render_template("main_page.html", error=error, data=data)
+        else:
+            cursor.execute(f"SELECT SellerID from Sellers where Username = (SELECT Username FROM users WHERE Cookie = '{session_id}')")
+            row = cursor.fetchone()
+            sellerid = row[0]
+            print(sellerid)
+            cursor.execute(
+                f"SELECT * from products where SellerID = '{sellerid}'")
+            data = cursor.fetchall()
+            return render_template("seller.html", error="", data=data)
     else:
         return render_template("main_page.html")
 
@@ -182,6 +200,10 @@ def profile_page():
     else:
         return redirect(url_for('login_page'))
 
+
+@app.route("/aboutus")
+def aboutus_page():
+    return render_template("abus.html")
 
 @app.route("/products")
 def products_page():

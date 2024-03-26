@@ -3,72 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <title>Seller Page</title>
-    <link rel="stylesheet" href="C:\Users\aakash\Desktop\BCA\4th SEM\DBMS PROJECT\staticFiles\seller.css">
+    <link rel="stylesheet" href="\staticFiles\seller.css">
 </head>
 <body>
-<div class="product_entry_container">
-    <form>
-        <div id="product_id" class="grid-item">
-            <label for="product_id">Product ID:</label>
-            <input type="text" placeholder="Product ID">
-        </div>
-        <div id="product_name" class="grid-item">
-            <label for="product_name">Product Name:</label>
-            <input type="text" placeholder="Product Name">
-        </div>
-        <div id="product_image" class="grid-item">
-            <label for="product_image">Product Image:</label>
-            <input type="file" placeholder="Product Image">
-        </div>
-        <div id="categories" class="grid-item">
-            <label for="categories">Choose a Category:</label>
-            <select name="Category">
-                <option value="Category 1">Category 1</option>
-                <option value="Category 2">Category 2</option>
-                <option value="Category 3">Category 3</option>
-                <option value="Category 4">Category 4</option>
-            </select>
-        </div>
-        <div id="price" class="grid-item">
-            <label for="price">Price:</label>
-            <input type="number" placeholder="Price">
-        </div>
-        <div id="stock" class="grid-item">
-            <label for="stock">Stock:</label>
-            <input type="number" placeholder="Stock">
-        </div>
-        <div id="description" class="grid-item">
-            <label for="description">Description:</label>
-            <input type="text" placeholder="Description">
-        </div>
-        <div id="warranty" class="grid-item">
-            <label for="warranty">Warranty:</label>
-            <input type="date" placeholder="Warranty">
-        </div>
-        <div id="expiry" class="grid-item">
-            <label for="expiry">Expiry:</label>
-            <input type="date" placeholder="Expiry">
-        </div>
-        <div id="weight" class="grid-item">
-            <label for="weight">Weight:</label>
-            <input type="number" placeholder="Weight">
-        </div>
-        <div id="dimensions" class="grid-item">
-            <label for="dimensions">Dimensions:</label>
-            <div>
-                <input type="number" placeholder="Height">
-                <input type="number" placeholder="Width">
-                <input type="number" placeholder="Breadth">
+    <div id="navbar" class="navbar">
+        <nav class="navigation">
+            <ul>
+                <li><img class="logo_img" src="\staticFiles/EcoTrack.png" alt="ECO TRACK"  /></li>
+                <li id="nav_url"><a id="About Us" href="{{ url_for('aboutus_page') }}">About Us</a></li>
+
+                <li id="nav_url"><a href="{{ url_for('registration') }}">User Profile</a></li>
+            </ul>
+        </nav>
+    </div>
+<div id="main_container">
+    <div class="product_entry_container">
+        <form>
+            <div id="heading" class="grid-item">
+                <h2>Add New Product</h2>
             </div>
+            <div id="product_id" class="grid-item">
+                <label for="product_id">Product ID:</label>
+                <input type="text" placeholder="Product ID">
+            </div>
+            <div id="product_name" class="grid-item">
+                <label for="product_name">Product Name:</label>
+                <input type="text" placeholder="Product Name">
+            </div>
+            <div id="product_image" class="grid-item">
+                <label for="product_image">Product Image:</label>
+                <input type="file" placeholder="Product Image">
+            </div>
+            <div id="categories" class="grid-item">
+                <label for="categories">Choose a Category:</label>
+                <select name="Category">
+                    <option value="Category 1">Category 1</option>
+                    <option value="Category 2">Category 2</option>
+                    <option value="Category 3">Category 3</option>
+                    <option value="Category 4">Category 4</option>
+                </select>
+            </div>
+            <div id="price" class="grid-item">
+                <label for="price">Price:</label>
+                <input type="number" placeholder="Price">
+            </div>
+            <div id="stock" class="grid-item">
+                <label for="stock">Stock:</label>
+                <input type="number" placeholder="Stock">
+            </div>
+            <div id="description" class="grid-item">
+                <label for="description">Description:</label>
+                <input type="text" placeholder="Description">
+            </div>
+            <div id="warranty" class="grid-item">
+                <label for="warranty">Warranty:</label>
+                <input type="date" placeholder="Warranty">
+            </div>
+            <div id="expiry" class="grid-item">
+                <label for="expiry">Expiry:</label>
+                <input type="date" placeholder="Expiry">
+            </div>
+            <div id="weight" class="grid-item">
+                <label for="weight">Weight:</label>
+                <input type="number" placeholder="Weight">
+            </div>
+            <div id="dimensions" class="grid-item">
+                <label for="dimensions">Dimensions:</label>
+                <div>
+                    <input type="number" placeholder="Height">
+                    <input type="number" placeholder="Width">
+                    <input type="number" placeholder="Breadth">
+                </div>
+            </div>
+            <div id="country" class="grid-item">
+                <label for="country">Country:</label>
+                <input type="text" placeholder="Country">
+            </div>
+            <div id="submit_button" class="grid-item">
+                <input type="submit" value="Add Product">
+            </div>
+        </form>
+    </div>
+
+    <div class="container">
+
+        {% for row in data %}
+            <div class="product-card" id="{{ loop.index }}">
+          <div class="product-image">
+            <img src="\staticFiles\Profile_Pics\aakashalloriaq1112Eco_Track_Logo.png" alt="Product 1">
+            <h4>{{ row[2]}}</h4>
+          </div>
+          <div class="product-info">
+            <p>{{ row[3]}}</p>
+            <span class="seller">{{ row[5] }}</span>
+          </div>
+          <button class="buy-btn" id="{{ loop.index }}" data-price="{{ row[6] }}">Buy Now - ${{ row[6] }}</button>
         </div>
-        <div id="country" class="grid-item">
-            <label for="country">Country:</label>
-            <input type="text" placeholder="Country">
-        </div>
-        <div id="submit_button" class="grid-item">
-            <input type="submit" value="Add Product">
-        </div>
-    </form>
+
+        {% endfor %}
+      </div>
 </div>
+  <!-- Fullscreen Product Details -->
+    <div class="fullscreen-product">
+      <div class="product-details">
+        <span class="close-btn" onclick="closeFullscreenProduct()">&times;</span>
+        <h2>Product Details</h2>
+        <div id="product-details-content"></div>
+      </div>
+    </div>
+
+ <script>
+  const buyButtons = document.querySelectorAll('.buy-btn');
+
+  buyButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const price = button.getAttribute('data-price');
+      let id = button.getAttribute("id") - 1;
+      console.log(id)
+      var data = {{ data|tojson|safe }};
+      data = data[id]
+
+      // Here you can get other product details and populate them in the fullscreen view
+
+      // Example of dynamically populating other product details
+      const productDetails = {
+        product_url: "\\staticFiles\\Profile_Pics\\aakashalloriaq1112Eco_Track_Logo.png",
+        productId: data[0],
+        sellerId: data[1],
+        productName: data[2],
+        description: data[3],
+        category: data[4],
+        brand: data[5],
+        stockQuantity: data[7],
+        productUrl: data[8],
+        warranty: data[9],
+        expiry: data[10],
+        weight: data[11],
+        dimensions: data[12],
+        countryOfOrigin: data[13],
+        ecoTrackChoice: data[14],
+      };
+
+      // Construct HTML for product details
+      const productDetailsContent = `
+        <img src="${productDetails.product_url}">
+        <p><strong>Product ID:</strong> ${productDetails.productId}</p>
+        <p><strong>Seller ID:</strong> ${productDetails.sellerId}</p>
+        <p><strong>Product Name:</strong> ${productDetails.productName}</p>
+        <p><strong>Description:</strong> ${productDetails.description}</p>
+        <p><strong>Category:</strong> ${productDetails.category}</p>
+        <p><strong>Brand:</strong> ${productDetails.brand}</p>
+        <p><strong>Price:</strong> $${price}</p>
+        <p><strong>Stock Quantity:</strong> ${productDetails.stockQuantity}</p>
+        <p><strong>Product URL:</strong> <a href="${productDetails.productUrl}" target="_blank">${productDetails.productUrl}</a></p>
+        <p><strong>Warranty:</strong> ${productDetails.warranty}</p>
+        <p><strong>Expiry:</strong> ${productDetails.expiry}</p>
+        <p><strong>Weight:</strong> ${productDetails.weight}</p>
+        <p><strong>Dimensions:</strong> ${productDetails.dimensions}</p>
+        <p><strong>Country of Origin:</strong> ${productDetails.countryOfOrigin}</p>
+        <p><strong>EcoTrack Choice:</strong> ${productDetails.ecoTrackChoice}</p>
+      `;
+
+      document.getElementById('product-details-content').innerHTML = productDetailsContent;
+      openFullscreenProduct();
+    });
+  });
+
+  function openFullscreenProduct() {
+    const fullscreenProduct = document.querySelector('.fullscreen-product');
+    const productDetails = document.querySelector('.product-details');
+    fullscreenProduct.style.display = 'block';
+    setTimeout(() => {
+        productDetails.classList.add('open');
+    }, 20); // Delay to ensure transition starts after display set to block
+  }
+
+  function closeFullscreenProduct() {
+    const fullscreenProduct = document.querySelector('.fullscreen-product');
+    const productDetails = document.querySelector('.product-details');
+    productDetails.classList.remove('open');
+    setTimeout(() => {
+        fullscreenProduct.style.display = 'none';
+    }, 250); // Delay to ensure transition completes before hiding
+  }
+</script>
 </body>
 </html>

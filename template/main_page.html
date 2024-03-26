@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/staticFiles/main_page.css">
@@ -14,7 +14,7 @@
         <nav class="navigation">
             <ul>
                 <li><img class="logo_img" src="/staticFiles/EcoTrack.png" alt="ECO TRACK"  /></li>
-                <li id="nav_url"><a id="About Us" href="about.asp">About Us</a></li>
+                <li id="nav_url"><a id="About Us" href="{{ url_for('aboutus_page') }}">About Us</a></li>
                 
                 <li id="nav_url"><a href="{{ url_for('registration') }}">User Profile</a></li>
             </ul>
@@ -56,10 +56,15 @@
             navbar.classList.add("fade_out");
 
         }
-
       })
     },{ threshold: 0.9 });
-    observer.observe(document.getElementsByClassName("product")[2])
+    try {
+        observer.observe(document.getElementsByClassName("product")[2])
+    }
+    catch (err){
+        navbar.classList.remove("fade_in");
+    }
+
 
 
     const observer2 = new IntersectionObserver(entries => {
