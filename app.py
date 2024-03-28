@@ -8,7 +8,7 @@ import flask
 from flask import Flask
 from flask import render_template, redirect, url_for, flash
 from flask import request
-from flask_login import LoginManager
+
 from flask_mysqldb import MySQL
 from flask_wtf import Form
 from flask_wtf.csrf import CSRFProtect
@@ -67,7 +67,7 @@ csrf = CSRFProtect(app)
 
 
 @app.route("/", )
-def hello():
+def mainpage():
 
     if request.cookies.get('session_id') is not None:
         session_id = request.cookies.get('session_id')
@@ -93,7 +93,7 @@ def hello():
             data = cursor.fetchall()
             return render_template("seller.html", error="", data=data)
     else:
-        return render_template("main_page.html")
+        return render_template("main_page.html",data=None)
 
 
 @app.route("/registration", methods=["POST"])

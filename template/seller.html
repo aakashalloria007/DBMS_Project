@@ -9,7 +9,7 @@
     <div id="navbar" class="navbar">
         <nav class="navigation">
             <ul>
-                <li><img class="logo_img" src="\staticFiles/EcoTrack.png" alt="ECO TRACK"  /></li>
+                <li><a href="{{ url_for('mainpage') }}"><img class="logo_img" src="/staticFiles/EcoTrack.png" alt="ECO TRACK" /></a> </li>
                 <li id="nav_url"><a id="About Us" href="{{ url_for('aboutus_page') }}">About Us</a></li>
 
                 <li id="nav_url"><a href="{{ url_for('registration') }}">User Profile</a></li>
@@ -90,7 +90,7 @@
         {% for row in data %}
             <div class="product-card" id="{{ loop.index }}">
           <div class="product-image">
-            <img src="\staticFiles\Profile_Pics\aakashalloriaq1112Eco_Track_Logo.png" alt="Product 1">
+            <img src="\staticFiles\product_images\{{ row[8] }}" alt="{{ row[3] }}">
             <h4>{{ row[2]}}</h4>
           </div>
           <div class="product-info">
