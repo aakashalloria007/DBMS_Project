@@ -10,6 +10,7 @@ from flask import render_template, redirect, url_for, flash
 from flask import request
 
 from flask_mysqldb import MySQL
+import mysql.connector
 from flask_wtf import Form
 from flask_wtf.csrf import CSRFProtect
 from flask_wtf.file import FileField, FileAllowed
@@ -18,6 +19,19 @@ from werkzeug.utils import secure_filename
 from wtforms import validators
 from wtforms.fields import RadioField
 from wtforms.fields.simple import StringField, PasswordField, EmailField
+
+import pickle
+
+import joblib
+import pandas as pd
+import mysql.connector
+import csv
+
+from sklearn.compose import ColumnTransformer
+from sklearn.metrics import classification_report
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
 
 mysql = MySQL()
 
@@ -66,9 +80,39 @@ class RegisterForm(Form):
 csrf = CSRFProtect(app)
 
 
-@app.route("/", )
-def mainpage():
+def predict(product_id):
+    onehot = joblib.load("onehotencoder")
+    minmax = joblib.load("minmaxscaler")
+    model = pickle.load(open('bestknn.pkl', 'rb'))
 
+
+    df = pd.read_sql_query(f"""select * from products where ProductID = {product_id}""", con=mysql.connection)
+
+    print(df)
+
+    X = df.iloc[:, [True,True,False,False,True,True,True,False,False,True,True,True,True,False,True]]
+    Y = df.iloc[:, [False,False,False,False,False,False,False,True,False,False,False,False,False,False,False]]
+    num_columns = X.select_dtypes(exclude=['object']).columns
+
+    cat_columns = X[["Category", "Brand"]].columns
+
+    df = onehot.transform(X[cat_columns])
+    df2 = minmax.transform(X[num_columns])
+
+    df = pd.DataFrame(df.toarray())
+    df2 = pd.DataFrame(df2)
+
+    clean_data = pd.concat([df2, df], axis=1, ignore_index=True)
+
+    print(clean_data.columns)
+
+    prediction = model.predict(clean_data)
+
+    return prediction
+
+
+@app.route("/",methods=["GET"])
+def mainpage():
     if request.cookies.get('session_id') is not None:
         session_id = request.cookies.get('session_id')
         cursor = mysql.connection.cursor()
@@ -84,6 +128,10 @@ def mainpage():
             error = None
             return render_template("main_page.html", error=error, data=data)
         else:
+            pred = request.args.get("pred")
+            if pred == None:
+                pred = 0
+            print(pred)
             cursor.execute(f"SELECT SellerID from Sellers where Username = (SELECT Username FROM users WHERE Cookie = '{session_id}')")
             row = cursor.fetchone()
             sellerid = row[0]
@@ -91,9 +139,54 @@ def mainpage():
             cursor.execute(
                 f"SELECT * from products where SellerID = '{sellerid}'")
             data = cursor.fetchall()
-            return render_template("seller.html", error="", data=data)
+            return render_template("seller.html", error="", data=data,pred=pred)
     else:
-        return render_template("main_page.html",data=None)
+        return render_template("main_page.html",data=None,)
+@app.route("/",methods=["POST"])
+def product_form():
+    if request.method == "POST":
+        session_id = request.cookies.get('session_id')
+        form = request.form
+        product_name = form["product_name"]
+        product_price = form["price"]
+        product_quantity = form["stock"]
+        product_category = form["Category"]
+        product_brand = form["brands"]
+        product_description = form["description"]
+        product_warranty = form["warranty"]
+        product_expiry = form["expiry"]
+        product_weight = form["weight"]
+        product_height = form["height"]
+        product_width = form["width"]
+        product_breadth = form["breadth"]
+        product_country = form["country"]
+        cursor = mysql.connection.cursor()
+        cursor.execute('''select max(ProductID) from products''')
+        product_id = cursor.fetchone()[0] +1
+        file = request.files['pfp']
+        filename = secure_filename(file.filename)
+        if filename == "":
+            flash("No file selected")
+            return redirect(url_for('register_page'))
+        if file and allowed_file(file.filename):
+            print("working")
+            filename = secure_filename(f"{product_name}")
+            file.save(os.path.join(
+                r"C:\Users\aakash\Desktop\BCA\4th SEM\DBMS PROJECT\staticFiles\product_images", filename
+            ))
+        else:
+            flash("Invalid File Type")
+            return redirect(url_for('register_page'))
+        cursor.execute(f"SELECT SellerID from sellers where Username = (select Username from users where Cookie = '{session_id}')")
+        row = cursor.fetchone()
+        seller_id = row[0]
+        print(product_warranty)
+        cursor.execute(f''' INSERT INTO PRODUCTS values ({product_id},{seller_id},"{product_name}","{product_description}","{product_category}","{product_brand}",{product_price},{product_quantity},"{filename}","{product_warranty}","{product_expiry}",{product_weight},"{product_height}x{product_width}x{product_breadth}","{product_country}",0) ''')
+        mysql.connection.commit()
+        prediction = predict(product_id)
+        return redirect(f"/?pred={prediction}")
+    mainpage()
+
 
 
 @app.route("/registration", methods=["POST"])
@@ -217,6 +310,5 @@ def products_page():
         return render_template("products2.html", data=data)
     else:
         return "Not Logged In"
-
 
 app.run(debug=True)

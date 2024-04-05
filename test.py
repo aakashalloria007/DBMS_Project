@@ -29,18 +29,25 @@
 #             print(e)
 #             print("getting alternate image")
 #             pass
-
+#
 import os
 import mysql.connector
-
+import csv
 con = mysql.connector.connect(host='localhost', user='root',password='aak20f031', database='dbms_project')
 
-
-filenames = os.listdir("./downloads")
-for file in filenames:
-    filename,fileextension = os.path.splitext(file)
-    cursor = con.cursor()
-    cursor.execute(f"UPDATE products set Product_Url = '{file}' where ProductName = '{filename}'")
-    con.commit()
-print("done")
-
+#
+# filenames = os.listdir("./downloads")
+# for file in filenames:
+#     filename,fileextension = os.path.splitext(file)
+#     cursor = con.cursor()
+#     cursor.execute(f"UPDATE products set Product_Url = '{file}' where ProductName = '{filename}'")
+#     con.commit()
+# print("done")
+#
+cursor = con.cursor()
+cursor.execute("Select * from products")
+rows = cursor.fetchall()
+fp = open('products.csv', 'w')
+myFile = csv.writer(fp)
+myFile.writerows(rows)
+fp.close()

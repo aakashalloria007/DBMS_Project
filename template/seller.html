@@ -18,66 +18,89 @@
     </div>
 <div id="main_container">
     <div class="product_entry_container">
-        <form>
+        <form method="post" action="/" enctype="multipart/form-data" >
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <div id="heading" class="grid-item">
                 <h2>Add New Product</h2>
             </div>
-            <div id="product_id" class="grid-item">
-                <label for="product_id">Product ID:</label>
-                <input type="text" placeholder="Product ID">
-            </div>
             <div id="product_name" class="grid-item">
                 <label for="product_name">Product Name:</label>
-                <input type="text" placeholder="Product Name">
+                <input name="product_name" type="text" placeholder="Product Name">
             </div>
             <div id="product_image" class="grid-item">
                 <label for="product_image">Product Image:</label>
-                <input type="file" placeholder="Product Image">
+                <input name="pfp" type="file" placeholder="Product Image">
             </div>
             <div id="categories" class="grid-item">
-                <label for="categories">Choose a Category:</label>
-                <select name="Category">
-                    <option value="Category 1">Category 1</option>
-                    <option value="Category 2">Category 2</option>
-                    <option value="Category 3">Category 3</option>
-                    <option value="Category 4">Category 4</option>
+                <label for="Category">Choose a Category:</label>
+                    <select name="Category">
+                    <option value="Electronic">Electronic</option>
+                    <option value="Clothes">Clothes</option>
+                    <option value="Sports Equipment">Sports Equipment</option>
+                </select>
+            </div>
+            <div id="brands" class="grid-item">
+                <label for="brands">Choose a Brand:</label>
+                <select name="brands">
+                    <option value="Apple">Apple</option>
+                    <option value="Samsung">Samsung</option>
+                    <option value="Logitech">Logitech</option>
+                    <option value="Sony">Sony</option>
+                    <option value="HP">HP</option>
+                    <option value="Dell">Dell</option>
+                    <option value="Asus">Asus</option>
+                    <option value="GAP">GAP</option>
+                    <option value="Gucci">Gucci</option>
+                    <option value="Louis Vuitton">Louis Vuitton</option>
+                    <option value="Converse">Converse</option>
+                    <option value="Prada">Prada</option>
+                    <option value="Tommy Hilfiger">Tommy Hilfiger</option>
+                    <option value="Versace">Versace</option>
+                    <option value="Adidas">Adidas</option>
+                    <option value="Nike">Nike</option>
+                    <option value="Puma">Puma</option>
+                    <option value="Asics">Asics</option>
+                    <option value="Reebok">Reebok</option>
+                    <option value="Jordan">Jordan</option>
+                    <option value="New Balance">New Balance</option>
+
                 </select>
             </div>
             <div id="price" class="grid-item">
                 <label for="price">Price:</label>
-                <input type="number" placeholder="Price">
+                <input name="price" type="number" placeholder="Price">
             </div>
             <div id="stock" class="grid-item">
                 <label for="stock">Stock:</label>
-                <input type="number" placeholder="Stock">
+                <input name="stock" type="number" placeholder="Stock">
             </div>
             <div id="description" class="grid-item">
                 <label for="description">Description:</label>
-                <input type="text" placeholder="Description">
+                <input name="description" type="text" placeholder="Description">
             </div>
             <div id="warranty" class="grid-item">
                 <label for="warranty">Warranty:</label>
-                <input type="date" placeholder="Warranty">
+                <input name="warranty" type="number" placeholder="Warranty in years">
             </div>
             <div id="expiry" class="grid-item">
                 <label for="expiry">Expiry:</label>
-                <input type="date" placeholder="Expiry">
+                <input name="expiry" type="date" placeholder="Expiry">
             </div>
             <div id="weight" class="grid-item">
                 <label for="weight">Weight:</label>
-                <input type="number" placeholder="Weight">
+                <input name="weight" type="number" placeholder="Weight">
             </div>
             <div id="dimensions" class="grid-item">
                 <label for="dimensions">Dimensions:</label>
                 <div>
-                    <input type="number" placeholder="Height">
-                    <input type="number" placeholder="Width">
-                    <input type="number" placeholder="Breadth">
+                    <input name="height" type="number" placeholder="Height">
+                    <input name="width" type="number" placeholder="Width">
+                    <input name="breadth" type="number" placeholder="Breadth">
                 </div>
             </div>
             <div id="country" class="grid-item">
                 <label for="country">Country:</label>
-                <input type="text" placeholder="Country">
+                <input name="country" type="text" placeholder="Country">
             </div>
             <div id="submit_button" class="grid-item">
                 <input type="submit" value="Add Product">
@@ -113,7 +136,12 @@
     </div>
 
  <script>
+
   const buyButtons = document.querySelectorAll('.buy-btn');
+  let pred = {{ pred }};
+  if (pred!==0){
+      alert("Expected Sales ="+pred);
+  }
 
   buyButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -127,7 +155,7 @@
 
       // Example of dynamically populating other product details
       const productDetails = {
-        product_url: "\\staticFiles\\Profile_Pics\\aakashalloriaq1112Eco_Track_Logo.png",
+        product_url: "\\staticFiles\\product_images\\"+data[8],
         productId: data[0],
         sellerId: data[1],
         productName: data[2],
